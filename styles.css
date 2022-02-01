@@ -1,0 +1,12 @@
+#root {
+  display: flex;
+}
+
+.first-div {
+  width: 40%;
+  background-color: bisque;
+}
+.second-div {
+  width: 60%;
+  background-color: paleturquoise;
+}
