@@ -61,7 +61,7 @@ const books = [
 function renderList() {
     const markup = books.map(({ title }) => {
     return ` <li>
-    <p>${title}</p>
+    <p class = 'title-book'>${title}</p>
     <button type = "button"> Edit</button>
     <button type = "button"> Delete</button>
     </li>`;
@@ -69,13 +69,19 @@ function renderList() {
     .join('');
     bookList.insertAdjacentHTML('afterbegin', markup);
     // console.log(markup);
+  const refP = document.querySelectorAll('.title-book');
+  refP.forEach(item => {
+    item.addEventListener('click', renderPreview);
+  });
+
+
 };
 
 renderList();
 
 // Задача №4
 
-function renderBookPreview({title, author, img, plot}) {
+function previewMarkup({title, author, img, plot}) {
     return `<div>
       <h2>${title}</h2>
       <p>${author}</p>
@@ -84,7 +90,6 @@ function renderBookPreview({title, author, img, plot}) {
     </div>`;
 }
 
-//console.log(renderBookPreview(books[0]));
 
 // Задача №5
 
@@ -110,4 +115,16 @@ function formMarkup({title, author, img, plot}) {
      </form>`;
 };
 
-console.log(formMarkup(books[0]));
+function renderPreview(event) {
+  const book = books.find(book => book.title === event.target.textContent);
+  console.log(event);
+  const markup = previewMarkup(book);
+
+  secondDivRef.innerHTML = '';
+  secondDivRef.insertAdjacentHTML('beforeend', markup);
+}
+
+
+
+
+
