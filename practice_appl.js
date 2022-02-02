@@ -14,6 +14,8 @@ titleRef.textContent = 'Library';
 addBtn.textContent = 'Add';
 firstDivRef.append(titleRef, bookList, addBtn);
 
+
+
 // Задача №3
 
 const books = [
@@ -58,16 +60,26 @@ const books = [
 ];
 
 // const listRef = document.querySelector('ul')
-function renderList() {
-    const markup = books.map(({ title }) => {
-    return ` <li>
+function renderList(books) {
+    const markup = books.map(({ id, title }) => {
+    return ` <li id=${id}>
     <p class = 'title-book'>${title}</p>
-    <button type = "button"> Edit</button>
-    <button type = "button"> Delete</button>
+    <button type = "button" class = "btn-edit"> Edit</button>
+    <button type = "button" class = "btn-del"> Delete</button>
     </li>`;
     })
     .join('');
-    bookList.insertAdjacentHTML('afterbegin', markup);
+  bookList.insertAdjacentHTML('afterbegin', markup);
+
+  const btnEditRef = document.querySelectorAll(".btn-edit");
+  const btnDelRef = document.querySelectorAll(".btn-del");
+  btnEditRef.forEach(item => {
+    item.addEventListener('click', editBook)
+  });
+
+  btnDelRef.forEach(item => {
+    item.addEventListener('click', delBook);
+  });
     // console.log(markup);
   const refP = document.querySelectorAll('.title-book');
   refP.forEach(item => {
@@ -77,7 +89,7 @@ function renderList() {
 
 };
 
-renderList();
+renderList(books);
 
 // Задача №4
 
@@ -117,12 +129,27 @@ function formMarkup({title, author, img, plot}) {
 
 function renderPreview(event) {
   const book = books.find(book => book.title === event.target.textContent);
-  console.log(event);
+  // console.log(event);
   const markup = previewMarkup(book);
 
   secondDivRef.innerHTML = '';
   secondDivRef.insertAdjacentHTML('beforeend', markup);
-}
+};
+
+function editBook(event) {
+  const idElem = event.target.parentElement.getAttribute("id");
+};
+
+function delBook(event) {
+  const idElem = event.target.parentElement.getAttribute("id");
+  const updatedBook = books.filter(book => (idElem !== book.id));
+  bookList.innerHTML = '';
+  renderList(updatedBook);
+
+};
+
+
+
 
 
 
